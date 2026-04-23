@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ReflectionResource\RelationManagers;
 
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
@@ -28,7 +29,7 @@ class OptionsRelationManager extends RelationManager
                 Tables\Columns\ImageColumn::make('image')->label('Gambar'),
                 Tables\Columns\TextColumn::make('label')->label('Label'),
             ])
-            ->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()])
-            ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
+            ->actions([Actions\EditAction::make(), Actions\DeleteAction::make()])
+            ->bulkActions([Actions\DeleteBulkAction::make()]);
     }
 }

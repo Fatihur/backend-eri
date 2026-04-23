@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ReflectionResource\Pages;
 use App\Filament\Resources\ReflectionResource\RelationManagers\OptionsRelationManager;
 use App\Models\Reflection;
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -37,8 +38,8 @@ class ReflectionResource extends Resource
                 Tables\Columns\TextColumn::make('type')->label('Tipe')->badge(),
                 Tables\Columns\TextColumn::make('options_count')->label('Opsi')->counts('options'),
             ])
-            ->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()])
-            ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
+            ->actions([Actions\EditAction::make(), Actions\DeleteAction::make()])
+            ->bulkActions([Actions\DeleteBulkAction::make()]);
     }
 
     public static function getRelations(): array

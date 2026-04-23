@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\Video360Resource\Pages;
 use App\Models\Video360;
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -36,8 +37,8 @@ class Video360Resource extends Resource
                 Tables\Columns\TextColumn::make('title')->label('Judul')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('material.title')->label('Materi')->sortable(),
             ])
-            ->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()])
-            ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
+            ->actions([Actions\EditAction::make(), Actions\DeleteAction::make()])
+            ->bulkActions([Actions\DeleteBulkAction::make()]);
     }
 
     public static function getPages(): array

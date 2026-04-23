@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\StoryResource\Pages;
 use App\Filament\Resources\StoryResource\RelationManagers\ScenesRelationManager;
 use App\Models\Story;
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -36,8 +37,8 @@ class StoryResource extends Resource
                 Tables\Columns\TextColumn::make('scenes_count')->label('Scenes')->counts('scenes'),
                 Tables\Columns\TextColumn::make('created_at')->label('Dibuat')->dateTime('d M Y'),
             ])
-            ->actions([Tables\Actions\EditAction::make(), Tables\Actions\DeleteAction::make()])
-            ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
+            ->actions([Actions\EditAction::make(), Actions\DeleteAction::make()])
+            ->bulkActions([Actions\DeleteBulkAction::make()]);
     }
 
     public static function getRelations(): array
