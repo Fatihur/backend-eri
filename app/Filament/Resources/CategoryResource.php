@@ -10,6 +10,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class CategoryResource extends Resource
 {
@@ -17,15 +18,25 @@ class CategoryResource extends Resource
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-tag';
     protected static ?string $navigationLabel = 'Kategori';
     protected static ?string $modelLabel = 'Kategori';
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Forms\Components\Select::make('class_id')->label('Kelas')->relationship('schoolClass', 'name')->required()->searchable(),
-            Forms\Components\TextInput::make('name')->label('Nama Kategori')->required()->maxLength(255),
+            Forms\Components\TextInput::make('name')
+                ->label('Nama Kategori')
+                ->required()
+                ->maxLength(255)
+                ->live(onBlur: true)
+                ->afterStateUpdated(fn ($state, $set) => $set('slug', Str::slug($state))),
+            Forms\Components\TextInput::make('slug')
+                ->label('Slug')
+                ->required()
+                ->maxLength(255)
+                ->unique(ignoreRecord: true),
             Forms\Components\Textarea::make('description')->label('Deskripsi')->rows(3),
-            Forms\Components\FileUpload::make('thumbnail')->label('Thumbnail')->image()->directory('categories'),
+            Forms\Components\TextInput::make('icon')->label('Ikon')->placeholder('home, sword, drum, mountain, book'),
+            Forms\Components\ColorPicker::make('color')->label('Warna'),
             Forms\Components\TextInput::make('order')->label('Urutan')->numeric()->default(0),
         ]);
     }
@@ -34,14 +45,14 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('thumbnail')->label('Thumb'),
                 Tables\Columns\TextColumn::make('name')->label('Nama')->searchable()->sortable(),
-                Tables\Columns\TextColumn::make('schoolClass.name')->label('Kelas')->sortable(),
-                Tables\Columns\TextColumn::make('materials_count')->label('Materi')->counts('materials'),
+                Tables\Columns\TextColumn::make('slug')->label('Slug')->toggleable(),
+                Tables\Columns\ColorColumn::make('color')->label('Warna'),
+                Tables\Columns\TextColumn::make('stories_count')->label('Jumlah Cerita')->counts('stories'),
                 Tables\Columns\TextColumn::make('order')->label('Urutan')->sortable(),
             ])
             ->defaultSort('order')
-            ->filters([Tables\Filters\SelectFilter::make('class_id')->label('Kelas')->relationship('schoolClass', 'name')])
+            ->reorderable('order')
             ->actions([Actions\EditAction::make(), Actions\DeleteAction::make()])
             ->bulkActions([Actions\DeleteBulkAction::make()]);
     }
