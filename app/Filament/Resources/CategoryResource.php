@@ -34,7 +34,10 @@ class CategoryResource extends Resource
                 ->required()
                 ->maxLength(255)
                 ->unique(ignoreRecord: true),
-            Forms\Components\Textarea::make('description')->label('Deskripsi')->rows(3),
+            Forms\Components\RichEditor::make('description')
+                ->label('Deskripsi')
+                ->columnSpanFull()
+                ->extraInputAttributes(['style' => 'min-height: 320px;']),
             Forms\Components\TextInput::make('icon')->label('Ikon')->placeholder('home, sword, drum, mountain, book'),
             Forms\Components\ColorPicker::make('color')->label('Warna'),
             Forms\Components\TextInput::make('order')->label('Urutan')->numeric()->default(0),

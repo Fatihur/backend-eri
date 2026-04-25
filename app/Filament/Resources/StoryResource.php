@@ -59,16 +59,17 @@ class StoryResource extends Resource
                     ])->columns(2),
 
                     Tab::make('Sinopsis')->schema([
-                        Forms\Components\Textarea::make('synopsis')
+                        Forms\Components\RichEditor::make('synopsis')
                             ->label('Sinopsis')
-                            ->rows(6)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->extraInputAttributes(['style' => 'min-height: 320px;']),
                     ]),
 
                     Tab::make('Pembelajaran')->schema([
                         Forms\Components\RichEditor::make('content')
                             ->label('Konten Storytelling')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->extraInputAttributes(['style' => 'min-height: 360px;']),
                         Forms\Components\FileUpload::make('audio_url')
                             ->label('Audio Narasi')
                             ->directory('stories/audio')
@@ -86,7 +87,8 @@ class StoryResource extends Resource
                     Tab::make('Sumber')->schema([
                         Forms\Components\RichEditor::make('sources')
                             ->label('Sumber & Referensi')
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->extraInputAttributes(['style' => 'min-height: 320px;']),
                     ]),
                 ]),
         ]);
