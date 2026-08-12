@@ -11,7 +11,9 @@ class StatsOverviewWidget extends BaseWidget
 {
     protected function getStats(): array
     {
-        $item3dCount = Item::whereNotNull('glb_path')->count();
+        $item3dCount = Item::whereNotNull('glb_path')
+            ->where('glb_path', '!=', '')
+            ->count();
 
         return [
             Stat::make('Total Kategori', Category::count())
