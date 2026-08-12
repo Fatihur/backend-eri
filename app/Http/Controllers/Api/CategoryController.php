@@ -10,13 +10,20 @@ class CategoryController extends Controller
 {
     public function index(): JsonResponse
     {
-        $categories = Category::orderBy('order')
-            ->withCount('stories')
-            ->get();
+        try {
+            $categories = Category::orderBy('order')
+                ->withCount('stories')
+                ->get();
 
-        return response()->json([
-            'data' => $categories,
-            'message' => 'Success',
-        ]);
+            return response()->json([
+                'data' => $categories,
+                'message' => 'Success',
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'data' => [],
+                'message' => 'Gagal memuat kategori',
+            ], 500);
+        }
     }
 }

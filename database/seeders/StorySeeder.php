@@ -68,7 +68,7 @@ class StorySeeder extends Seeder
                 $sceneA = PanoramaScene::create([
                     'story_id' => $story->id,
                     'title' => 'Tepi Danau',
-                    'panorama_image' => 'panoramas/placeholder.jpg',
+                    'panorama_image' => 'panoramas/placeholder.svg',
                     'initial_yaw' => 0,
                     'initial_pitch' => 0,
                     'order' => 1,
@@ -76,7 +76,7 @@ class StorySeeder extends Seeder
                 $sceneB = PanoramaScene::create([
                     'story_id' => $story->id,
                     'title' => 'Puncak Bukit',
-                    'panorama_image' => 'panoramas/placeholder.jpg',
+                    'panorama_image' => 'panoramas/placeholder.svg',
                     'initial_yaw' => 0,
                     'initial_pitch' => 0,
                     'order' => 2,
@@ -97,6 +97,15 @@ class StorySeeder extends Seeder
                     'pitch' => 0,
                     'label' => 'Ke Tepi Danau',
                     'type' => 'navigation',
+                ]);
+                PanoramaHotspot::create([
+                    'scene_id' => $sceneA->id,
+                    'target_scene_id' => null,
+                    'yaw' => -45,
+                    'pitch' => -10,
+                    'label' => 'Info Objek',
+                    'type' => 'info',
+                    'content' => 'Contoh objek budaya di sekitar lokasi. Isi deskripsi singkat di panel admin.',
                 ]);
             }
         }

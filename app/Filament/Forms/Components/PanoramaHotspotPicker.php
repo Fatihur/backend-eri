@@ -23,6 +23,7 @@ class PanoramaHotspotPicker extends Field
                     'pitch' => (float) $h->pitch,
                     'target_scene_id' => $h->target_scene_id,
                     'label' => $h->label,
+                    'content' => $h->content,
                 ])->all();
                 $component->state($hotspots);
             } else {
@@ -50,6 +51,7 @@ class PanoramaHotspotPicker extends Field
                     'pitch' => (float) $row['pitch'],
                     'target_scene_id' => $row['target_scene_id'] ?? null,
                     'label' => $row['label'] ?? null,
+                    'content' => $row['content'] ?? null,
                     'type' => 'navigation',
                 ];
 

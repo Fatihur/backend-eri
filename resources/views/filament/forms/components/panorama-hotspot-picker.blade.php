@@ -58,6 +58,8 @@
                             </select>
                             <label class="block text-xs text-gray-600">Label (opsional)</label>
                             <input type="text" class="w-full text-xs rounded border-gray-300" x-model="h.label" @input="sync()"/>
+                            <label class="block text-xs text-gray-600">Info objek (opsional, tampil saat hotspot info ditekan)</label>
+                            <textarea rows="2" class="w-full text-xs rounded border-gray-300" x-model="h.content" @input="sync()" placeholder="Deskripsi singkat objek"></textarea>
                         </div>
                     </template>
                     <div x-show="hotspots.length === 0" class="text-xs text-gray-500 italic text-center py-4">
@@ -121,6 +123,7 @@
                             pitch: pitch,
                             target_scene_id: null,
                             label: '',
+                            content: '',
                         });
                         this.sync();
                         this.renderViewerHotspots();

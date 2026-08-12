@@ -9,10 +9,13 @@ class AdminUserSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@senibudaya.com',
-            'password' => bcrypt('password'),
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@senibudaya.com'],
+            [
+                'name' => 'Admin',
+                'password' => bcrypt('password'),
+                'is_admin' => true,
+            ],
+        );
     }
 }

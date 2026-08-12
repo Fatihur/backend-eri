@@ -13,6 +13,7 @@ class PanoramaHotspot extends Model
         'yaw',
         'pitch',
         'label',
+        'content',
         'type',
     ];
 
