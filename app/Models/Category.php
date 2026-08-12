@@ -9,8 +9,8 @@ class Category extends Model
 {
     protected $fillable = ['name', 'slug', 'description', 'icon', 'color', 'order'];
 
-    public function stories(): HasMany
+    public function items(): HasMany
     {
-        return $this->hasMany(Story::class);
+        return $this->hasMany(Item::class);
     }
 }

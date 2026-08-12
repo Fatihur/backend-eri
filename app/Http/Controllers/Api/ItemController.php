@@ -3,26 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Story;
+use App\Models\Item;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class StoryController extends Controller
+class ItemController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
         try {
-            $query = Story::query()
-                ->with('category')
-                ->withExists('scenes')
-                ->withCount('scenes');
+            $query = Item::query()->with('category');
 
             if ($categoryId = $request->query('category_id')) {
                 $query->where('category_id', $categoryId);
-            }
-
-            if ($request->boolean('has_panorama')) {
-                $query->has('scenes');
             }
 
             if ($ids = $request->query('ids')) {
@@ -39,16 +32,20 @@ class StoryController extends Controller
                 }
             }
 
-            $stories = $query->orderByDesc('published_at')->orderByDesc('id')->get();
+            $items = $query
+                ->whereNotNull('published_at')
+                ->orderByDesc('published_at')
+                ->orderByDesc('id')
+                ->get();
 
             return response()->json([
-                'data' => $stories,
+                'data' => $items,
                 'message' => 'Success',
             ]);
         } catch (\Throwable $e) {
             return response()->json([
                 'data' => [],
-                'message' => 'Gagal memuat cerita',
+                'message' => 'Gagal memuat item',
             ], 500);
         }
     }
@@ -56,60 +53,38 @@ class StoryController extends Controller
     public function latest(): JsonResponse
     {
         try {
-            $stories = Story::with('category')
-                ->withExists('scenes')
-                ->withCount('scenes')
+            $items = Item::with('category')
+                ->whereNotNull('published_at')
                 ->orderByDesc('published_at')
                 ->orderByDesc('id')
                 ->limit(10)
                 ->get();
 
             return response()->json([
-                'data' => $stories,
+                'data' => $items,
                 'message' => 'Success',
             ]);
         } catch (\Throwable $e) {
             return response()->json([
                 'data' => [],
-                'message' => 'Gagal memuat cerita terbaru',
+                'message' => 'Gagal memuat item terbaru',
             ], 500);
         }
     }
 
-    public function show(Story $story): JsonResponse
+    public function show(Item $item): JsonResponse
     {
         try {
-            $story->load(['category', 'scenes.hotspots']);
+            $item->load('category');
 
             return response()->json([
-                'data' => $story,
+                'data' => $item,
                 'message' => 'Success',
             ]);
         } catch (\Throwable $e) {
             return response()->json([
                 'data' => null,
-                'message' => 'Gagal memuat detail cerita',
-            ], 500);
-        }
-    }
-
-    public function panorama(Story $story): JsonResponse
-    {
-        try {
-            $story->load(['scenes.hotspots']);
-
-            return response()->json([
-                'data' => [
-                    'story_id' => $story->id,
-                    'title' => $story->title,
-                    'scenes' => $story->scenes,
-                ],
-                'message' => 'Success',
-            ]);
-        } catch (\Throwable $e) {
-            return response()->json([
-                'data' => null,
-                'message' => 'Gagal memuat panorama',
+                'message' => 'Gagal memuat detail item',
             ], 500);
         }
     }

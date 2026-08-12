@@ -51,7 +51,7 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('name')->label('Nama')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('slug')->label('Slug')->toggleable(),
                 Tables\Columns\ColorColumn::make('color')->label('Warna'),
-                Tables\Columns\TextColumn::make('stories_count')->label('Jumlah Cerita')->counts('stories'),
+                Tables\Columns\TextColumn::make('items_count')->label('Jumlah Item')->counts('items'),
                 Tables\Columns\TextColumn::make('order')->label('Urutan')->sortable(),
             ])
             ->defaultSort('order')

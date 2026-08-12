@@ -12,7 +12,7 @@ class CategoryController extends Controller
     {
         try {
             $categories = Category::orderBy('order')
-                ->withCount('stories')
+                ->withCount('items')
                 ->get();
 
             return response()->json([
