@@ -54,13 +54,11 @@ class ItemResource extends Resource
                             ->label('Teks Sejarah')
                             ->columnSpanFull()
                             ->extraInputAttributes(['style' => 'min-height: 360px;']),
-                        Forms\Components\FileUpload::make('video_url')
-                            ->label('Video')
+                        Forms\Components\TextInput::make('video_url')
+                            ->label('Video (YouTube)')
                             ->columnSpanFull()
-                            ->directory('items/videos')
-                            ->maxSize(102400)
-                            ->acceptedFileTypes(['video/mp4', 'video/webm', 'video/quicktime'])
-                            ->helperText('Upload file video (MP4, WebM, atau MOV). Maksimal 100MB.'),
+                            ->placeholder('https://www.youtube.com/watch?v=...')
+                            ->helperText('Tempel link video YouTube. Pastikan video diizinkan untuk disematkan (embed) di aplikasi lain.'),
                     ])->columns(2),
 
                     Tab::make('Aset 3D')->schema([
